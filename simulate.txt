@@ -60,27 +60,27 @@ cp 15fs.gro topol.top ../30fs
 cd ../30fs
 gmx grompp -f ../../files/martini_v2.x_new-rf.prod_run.${lipidtype}.mdp -c 15fs.gro -p topol.top -o 30fs.tpr
 gmx mdrun -deffnm 30fs -v -nt 8
-cd ..
+
+# analysis
+
+mkdir analysis
+cd analysis
+echo q | gmx make_ndx -f ../30fs.gro -o index.ndx
+echo 2 2 | gmx trjconv -f ../30fs.xtc -s ../30fs.tpr -o traj-center-mol.xtc -center -n index.ndx -pbc mol
+../../files/area-lipid-g5.py ../30fs.edr 0 170 100 310 > ever-area-out.xvg
+
+#gmx msd -f traj-center-mol.xtc -n index_diffusion.ndx -lateral z -b $beg -e $end -s topol.tpr -rmcomm -o dopc-01.xvg
 
 # clean up
 
-#rm -r em
-#rm -r 1fs
-#rm -r 5fs
-#rm -r 15fs
+rm -r em
+rm -r 1fs
+rm -r 5fs
+rm -r 15fs
 cd ..
 
-# diffusion analysis
 
-#mkdir analysis
-#cd 30fs
-#cp 30fs.gro 30fs.xtc ../analysis
-#cd ..
-#cd ..
-#../../area-lipid-g5.py 30fs.gro 1 170
-#gmx make_ndx -f 30fs.gro -o index.ndx
-#cgmx trjconv -f 30fs.xtc -o traj-center-mol.xtc -center -n index.ndx -pbc mol
-#gmx msd -f traj-center-mol.xtc -n index_diffusion.ndx -lateral z -b $beg -e $end -s topol.tpr -rmcomm -o dopc-01.xvg
+
 
 
 
