@@ -1,0 +1,86 @@
+#!/bin/bash
+
+# variables 
+
+size=100
+lipidtype=$1
+chol=$2
+time=20
+asym=$3
+
+# energy minimization
+
+fp=${lipidtype}_${size}_${asym}_CHOL_${chol}
+mkdir $fp
+cd $fp
+mkdir em
+cd em
+../../files/insane.py -l ${lipidtype}:${size} -l CHOL:${chol} -u ${lipidtype}:${size} -u CHOL:${chol} -pbc square -sol W -x 7.5 -y 7.5 -z 10 -o ${fp}.gro -p top.top -asym $asym
+cat ../../header.txt top.top > topol.top
+sed -i ‘’ 12d topol.top
+gmx grompp -f ../../files/minimization${lipidtype}.mdp -c ${fp}.gro -p topol.top -o em.tpr
+gmx mdrun -deffnm em -v
+cd ..
+
+# 1fs
+
+mkdir 1fs
+cd em
+cp em.gro topol.top ../1fs
+cd ../1fs
+gmx grompp -f ../../files/martini_v2.x_new-rf.1fs.${lipidtype}.mdp -c em.gro -p topol.top -o 1fs.tpr
+gmx mdrun -deffnm 1fs -v -nt 1
+cd ..
+
+# 5fs 
+
+mkdir 5fs
+cd 1fs
+cp 1fs.gro topol.top ../5fs
+cd ../5fs
+gmx grompp -f ../../files/martini_v2.x_new-rf.5fs.${lipidtype}.mdp -c 1fs.gro -p topol.top -o 5fs.tpr
+gmx mdrun -deffnm 5fs -v -nt 2
+cd ..
+
+# 15fs
+
+mkdir 15fs
+cd 5fs
+cp 5fs.gro topol.top ../15fs
+cd ../15fs
+gmx grompp -f ../../files/martini_v2.x_new-rf.15fs.${lipidtype}.mdp -c 5fs.gro -p topol.top -o 15fs.tpr
+gmx mdrun -deffnm 15fs -v -nt 4
+cd ..
+
+# 30fs
+
+mkdir 30fs
+cd 15fs
+cp 15fs.gro topol.top ../30fs
+cd ../30fs
+gmx grompp -f ../../files/martini_v2.x_new-rf.prod_run.${lipidtype}.mdp -c 15fs.gro -p topol.top -o 30fs.tpr
+gmx mdrun -deffnm 30fs -v -nt 8
+cd ..
+
+# clean up
+
+#rm -r em
+#rm -r 1fs
+#rm -r 5fs
+#rm -r 15fs
+cd ..
+
+# diffusion analysis
+
+#mkdir analysis
+#cd 30fs
+#cp 30fs.gro 30fs.xtc ../analysis
+#cd ..
+#cd ..
+#../../area-lipid-g5.py 30fs.gro 1 170
+#gmx make_ndx -f 30fs.gro -o index.ndx
+#cgmx trjconv -f 30fs.xtc -o traj-center-mol.xtc -center -n index.ndx -pbc mol
+#gmx msd -f traj-center-mol.xtc -n index_diffusion.ndx -lateral z -b $beg -e $end -s topol.tpr -rmcomm -o dopc-01.xvg
+
+
+

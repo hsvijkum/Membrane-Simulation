@@ -1,0 +1,13 @@
+import sys,os,math,random,subprocess,numpy
+
+lipids=["DBPC", "DLPC", "DOPC", "DPPC", "DTPC", "DVPC", "DXPC", "DYPC"]
+chol=[5, 10, 15, 20, 25, 30]
+asym=[10, 20, 30]
+
+for l in lipids:
+	for c in chol:
+		for a in asym:
+			subprocess.call(["./simulate.txt", l, str(c), str(a)])
+
+
+sys.exit(0)
