@@ -16,7 +16,7 @@ cd $fp
 mkdir em
 cd em
 ../../files/insane.py -l ${lipidtype}:${size} -l CHOL:${chol} -u ${lipidtype}:${size} -u CHOL:${chol} -pbc square -sol W -x 7.5 -y 7.5 -z 10 -o ${fp}.gro -p top.top -asym $asym
-cat ../../header.txt top.top > topol.top
+cat ../../files/header.txt top.top > topol.top
 sed -i ‘’ 12d topol.top
 gmx grompp -f ../../files/minimization${lipidtype}.mdp -c ${fp}.gro -p topol.top -o em.tpr
 gmx mdrun -deffnm em -v
@@ -63,7 +63,7 @@ mkdir analysis
 cd analysis
 echo q | gmx make_ndx -f ../30fs.gro -o index.ndx
 echo 2 2 | gmx trjconv -f ../30fs.xtc -s ../30fs.tpr -o traj-center-mol.xtc -center -n index.ndx -pbc mol
-../../files/area-lipid-g5.py ../30fs.edr 0 170 100 310 > ever-area-out.xvg
+../../../files/area-lipid-g5.py ../30fs.edr 0 170 100 310 > ever-area-out.xvg
 mv ever-area-out.xvg ../../
 cd ..
 
@@ -77,9 +77,3 @@ rm -r 5fs
 rm -r 15fs
 rm -r 30fs
 cd ..
-
-
-
-
-
-
