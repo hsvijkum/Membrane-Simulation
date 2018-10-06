@@ -11,6 +11,7 @@ for l in lipids:
 			subprocess.call(["./simulate.txt", l, str(c), str(a)])
 			f = open("ener-area-out.xvg")
 			ls = f.readlines()
+			f.close()
 
 
 sys.exit(0)
