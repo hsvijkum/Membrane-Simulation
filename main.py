@@ -9,6 +9,7 @@ for l in lipids:
 	for c in chol:
 		for a in asym:
 			subprocess.call(["./simulate.txt", l, str(c), str(a)])
+			f = open("ever-area-out")
 
 
 sys.exit(0)
