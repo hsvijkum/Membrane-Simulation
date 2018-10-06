@@ -75,5 +75,5 @@ rm -r em
 rm -r 1fs
 rm -r 5fs
 rm -r 15fs
-rm -r 30fs
+#rm -r 30fs
 cd ..
