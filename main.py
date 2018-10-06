@@ -11,7 +11,11 @@ for l in lipids:
 			subprocess.call(["./simulate.txt", l, str(c), str(a)])
 			f = open("ener-area-out.xvg")
 			ls = f.readlines()
+			data = []
+			for ln in ls:
+				data.append(float(ln.split("Average +/- sd projected area per lipid:")[1]))
 			f.close()
+			print(data)
 
 
 sys.exit(0)
