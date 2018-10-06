@@ -28,7 +28,7 @@ mkdir 1fs
 cp em/em.gro em/topol.top 1fs
 cd 1fs
 gmx grompp -f ../../files/martini_v2.x_new-rf.1fs.${lipidtype}.mdp -c em.gro -p topol.top -o 1fs.tpr
-gmx mdrun -deffnm 1fs -v -nt 1
+gmx mdrun -deffnm 1fs -v -nt 4
 cd ..
 
 # 5fs 
@@ -37,7 +37,7 @@ mkdir 5fs
 cp 1fs/1fs.gro 1fs/topol.top 5fs
 cd 5fs
 gmx grompp -f ../../files/martini_v2.x_new-rf.5fs.${lipidtype}.mdp -c 1fs.gro -p topol.top -o 5fs.tpr
-gmx mdrun -deffnm 5fs -v -nt 2
+gmx mdrun -deffnm 5fs -v -nt 4
 cd ..
 
 # 15fs
