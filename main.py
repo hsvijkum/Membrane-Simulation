@@ -12,8 +12,8 @@ for l in lipids:
 			f = open("ener-area-out.xvg")
 			ls = f.readlines()
 			data = []
-			data.append(float(ls[0].split("Average +/- sd projected area per lipid:")[1]))
-			data.append(float(ls[1].split("Calculate compressibility moduleus: ave")[1]))
+			data.append(float(ls[3].split("Average +/- sd projected area per lipid:")[1]))
+			data.append(float(ls[4].split("Calculate compressibility moduleus: ave")[1]))
 			f.close()
 			print(data)
 
