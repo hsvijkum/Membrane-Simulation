@@ -64,6 +64,7 @@ cd analysis
 echo q | gmx make_ndx -f ../30fs.gro -o index.ndx
 echo 2 2 | gmx trjconv -f ../30fs.xtc -s ../30fs.tpr -o traj-center-mol.xtc -center -n index.ndx -pbc mol
 ../../../files/area-lipid-g5.py ../30fs.edr 0 170 100 310 > ener-area-out.xvg
+gmx msd -f traj-center-mol.xtc -n index.ndx -lateral z -b 0 -e 170 -s ../30fs.tpr -rncomm -o dopc-01.xvg
 cp ener-area-out.xvg ../../../
 cd ../../
 
