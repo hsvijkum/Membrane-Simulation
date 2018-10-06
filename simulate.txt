@@ -70,8 +70,4 @@ cd ../../
 #gmx msd -f traj-center-mol.xtc -n index_diffusion.ndx -lateral z -b $beg -e $end -s topol.tpr -rmcomm -o dopc-01.xvg
 
 # clean up
-rm -r em
-rm -r 1fs
-rm -r 5fs
-rm -r 15fs
 cd ..
