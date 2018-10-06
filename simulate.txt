@@ -51,20 +51,20 @@ cd ..
 
 # 30fs
 
-mkdir 30fs
-cp 15fs/15fs.gro 15fs/topol.top 30fs
-cd 30fs
-gmx grompp -f ../../files/martini_v2.x_new-rf.prod_run.${lipidtype}.mdp -c 15fs.gro -p topol.top -o 30fs.tpr
-gmx mdrun -deffnm 30fs -v -nt 4
+mkdir 20fs
+cp 15fs/15fs.gro 15fs/topol.top 20fs
+cd 20fs
+gmx grompp -f ../../files/martini_v2.x_new-rf.prod_run.${lipidtype}.mdp -c 20fs.gro -p topol.top -o 20fs.tpr
+gmx mdrun -deffnm 20fs -v -nt 4
 
 # analysis
 
 mkdir analysis
 cd analysis
-echo q | gmx make_ndx -f ../30fs.gro -o index.ndx
-echo 2 2 | gmx trjconv -f ../30fs.xtc -s ../30fs.tpr -o traj-center-mol.xtc -center -n index.ndx -pbc mol
-../../../files/area-lipid-g5.py ../30fs.edr 0 170 100 310 > ener-area-out.xvg
-gmx msd -f traj-center-mol.xtc -n index.ndx -lateral z -b 0 -e 170 -s ../30fs.tpr -rncomm -o dopc-01.xvg
+echo q | gmx make_ndx -f ../20fs.gro -o index.ndx
+echo 2 2 | gmx trjconv -f ../20fs.xtc -s ../20fs.tpr -o traj-center-mol.xtc -center -n index.ndx -pbc mol
+../../../files/area-lipid-g5.py ../20fs.edr 0 170 100 310 > ener-area-out.xvg
+gmx msd -f traj-center-mol.xtc -n index.ndx -lateral z -b 0 -e 170 -s ../20fs.tpr -rncomm -o dopc-01.xvg
 cp ener-area-out.xvg ../../../
 cd ../../
 
