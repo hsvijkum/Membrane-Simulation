@@ -1,0 +1,11 @@
+#include "../../files/martini_v2.2.itp"
+#include "../../files/martini_v2.0_DBPC_01.itp"
+#include "../../files/martini_v2.0_DLPC_01.itp"
+#include "../../files/martini_v2.0_DOPC_02.itp"
+#include "../../files/martini_v2.0_DPPC_01.itp"
+#include "../../files/martini_v2.0_DTPC_01.itp"
+#include "../../files/martini_v2.0_DVPC_01.itp"
+#include "../../files/martini_v2.0_DXPC_01.itp"
+#include "../../files/martini_v2.0_DYPC_01.itp"
+#include "../../files/martini_v2.0_CHOL_02.itp"
+
