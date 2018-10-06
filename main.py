@@ -1,9 +1,9 @@
 import sys,os,math,random,subprocess
 import numpy as np
 
-lipids=["DOPC", "DPPC", "DTPC"]
-chol=[30]
-asym=[30, 40]
+lipids=["DBPC", "DLPC", "DOPC", "DPPC", "DTPC", "DVPC", "DXPC", "DYPC"]
+chol=[5, 10, 15, 20, 25, 30]
+asym=[10, 20, 30, 40]
 
 M = []
 
