@@ -9,7 +9,8 @@ for l in lipids:
 	for c in chol:
 		for a in asym:
 			subprocess.call(["./simulate.txt", l, str(c), str(a)])
-			f = open("ever-area-out")
+			f = open("ener-area-out.xvg")
+			ls = f.readlines()
 
 
 sys.exit(0)
