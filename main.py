@@ -1,5 +1,6 @@
 import sys,os,math,random,subprocess
 import numpy as np
+import matplotlib
 
 lipids=["DBPC", "DLPC", "DOPC", "DPPC", "DTPC", "DVPC", "DXPC", "DYPC"]
 chol=[5, 10, 15, 20, 25, 30]
