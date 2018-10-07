@@ -57,18 +57,26 @@ cd 20fs
 gmx grompp -f ../../files/martini_v2.x_new-rf.prod_run.${lipidtype}.mdp -c 20fs.gro -p topol.top -o 20fs.tpr
 gmx mdrun -deffnm 20fs -v -nt 4
 
-# analysis
+# indexing
 
 mkdir analysis
 cd analysis
-echo q | gmx make_ndx -f ../20fs.gro -o index.ndx
-echo 2 2 | gmx trjconv -f ../20fs.xtc -s ../20fs.tpr -o traj-center-mol.xtc -center -n index.ndx -pbc mol
-../../../files/area-lipid-g5.py ../20fs.edr 0 170 100 310 > ener-area-out.xvg
-gmx msd -f traj-center-mol.xtc -n index.ndx -lateral z -b 0 -e 170 -s ../20fs.tpr -rncomm -o dopc-01.xvg
-cp ener-area-out.xvg ../../../
-cd ../../
+gmx make_ndx -f ../20fs.gro -o index.ndx
+echo a PO4 ROH
+echo name 5 headgroups
+echo del 0-4
+echo q
+fatslim membranes -c ../20fs.gro -n index.ndx --output-index bilayer_leaflet.ndx
 
-#gmx msd -f traj-center-mol.xtc -n index_diffusion.ndx -lateral z -b $beg -e $end -s topol.tpr -rmcomm -o dopc-01.xvg
+# analysis
+
+fatslim thickness -c ../20fs.gro -n index.ndx -t ../20fs.xtc --plot-thickness thickness.xvg
+fatslim apl -c ../20fs.gro -n index.ndx -t ../20fs.xtc --plot-apl apl.xvg --plot-area area.xvg
+
+echo 2 2 | gmx trjconv -f ../20fs.xtc -s ../20fs.tpr -o traj-center-mol.xtc -center -n index.ndx -pbc mol
+gmx msd -f traj-center-mol.xtc -n index.ndx -lateral z -b 0 -e 170 -s ../20fs.tpr -rncomm -o dopc-01.xvg
+../../../files/area-lipid-g5.py ../20fs.edr 0 170 100 310 > ener-area-out.xvg
+cd ../../
 
 # clean up
 rm -r em
