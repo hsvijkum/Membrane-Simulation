@@ -18,8 +18,8 @@ cd em
 ../../files/insane.py -l ${lipidtype}:${size} -l CHOL:${chol} -u ${lipidtype}:${size} -u CHOL:${chol} -pbc square -sol W -x 7.5 -y 7.5 -z 10 -o ${fp}.gro -p top.top -asym $asym
 cat ../../files/header.txt top.top > topol.top
 sed -i ‘’ 12d topol.top
-gmx grompp -f ../../files/minimization${lipidtype}.mdp -c ${fp}.gro -p topol.top -o em.tpr
-gmx mdrun -deffnm em -v
+gmx grompp -f ../../files/minimization${lipidtype}.mdp -c ${fp}.gro -p topol.top -o em.tpr > /dev/null
+gmx mdrun -deffnm em -v > /dev/null
 cd ..
 
 # 1fs
@@ -27,8 +27,8 @@ cd ..
 mkdir 1fs
 cp em/em.gro em/topol.top 1fs
 cd 1fs
-gmx grompp -f ../../files/martini_v2.x_new-rf.1fs.${lipidtype}.mdp -c em.gro -p topol.top -o 1fs.tpr
-gmx mdrun -deffnm 1fs -v -nt 4
+gmx grompp -f ../../files/martini_v2.x_new-rf.1fs.${lipidtype}.mdp -c em.gro -p topol.top -o 1fs.tpr > /dev/null
+gmx mdrun -deffnm 1fs -v -nt 4 > /dev/null
 cd ..
 
 # 5fs 
@@ -36,8 +36,8 @@ cd ..
 mkdir 5fs
 cp 1fs/1fs.gro 1fs/topol.top 5fs
 cd 5fs
-gmx grompp -f ../../files/martini_v2.x_new-rf.5fs.${lipidtype}.mdp -c 1fs.gro -p topol.top -o 5fs.tpr
-gmx mdrun -deffnm 5fs -v -nt 4
+gmx grompp -f ../../files/martini_v2.x_new-rf.5fs.${lipidtype}.mdp -c 1fs.gro -p topol.top -o 5fs.tpr > /dev/null
+gmx mdrun -deffnm 5fs -v -nt 4 > /dev/null
 cd ..
 
 # 15fs
@@ -45,8 +45,8 @@ cd ..
 mkdir 15fs
 cp 5fs/5fs.gro 5fs/topol.top 15fs
 cd 15fs
-gmx grompp -f ../../files/martini_v2.x_new-rf.15fs.${lipidtype}.mdp -c 5fs.gro -p topol.top -o 15fs.tpr
-gmx mdrun -deffnm 15fs -v -nt 4
+gmx grompp -f ../../files/martini_v2.x_new-rf.15fs.${lipidtype}.mdp -c 5fs.gro -p topol.top -o 15fs.tpr > /dev/null
+gmx mdrun -deffnm 15fs -v -nt 4 > /dev/null
 cd ..
 
 # 30fs
@@ -54,8 +54,8 @@ cd ..
 mkdir 20fs
 cp 15fs/15fs.gro 15fs/topol.top 20fs
 cd 20fs
-gmx grompp -f ../../files/martini_v2.x_new-rf.prod_run.${lipidtype}.mdp -c 20fs.gro -p topol.top -o 20fs.tpr
-gmx mdrun -deffnm 20fs -v -nt 4
+gmx grompp -f ../../files/martini_v2.x_new-rf.prod_run.${lipidtype}.mdp -c 20fs.gro -p topol.top -o 20fs.tpr > /dev/null
+gmx mdrun -deffnm 20fs -v -nt 4 > /dev/null
 
 # indexing
 
