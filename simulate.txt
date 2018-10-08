@@ -78,6 +78,7 @@ gmx msd -f traj-center-mol.xtc -n index.ndx -lateral z -b 0 -e 170 -s ../20fs.tp
 cd ../../
 
 # clean up
+
 rm -r em
 rm -r 1fs
 rm -r 5fs 
