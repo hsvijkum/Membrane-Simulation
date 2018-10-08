@@ -12,8 +12,7 @@ for l in lipids:
 	for c in chol:
 		for a in asym:
 			subprocess.call(["./simulate.txt", l, str(c), str(a)])
-			fp = l + "_100_" + str(asym) + "_CHOL_" + str(chol) + "/20fs/analysis/"
-			f = open(fp + "ener-area-out.xvg")
+			f = open("analysis/ener-area-out.xvg")
 			ls = f.readlines()
 			data = []
 			data.append(float(ls[3].split("Average +/- sd projected area per lipid: ")[1].split(" ")[0]))
