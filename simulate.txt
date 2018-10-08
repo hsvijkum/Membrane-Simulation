@@ -75,8 +75,14 @@ fatslim membranes -c ../20fs.gro -n index.ndx --output-index bilayer_leaflet.ndx
 fatslim thickness -c ../20fs.gro -n index.ndx -t ../20fs.xtc --plot-thickness thickness.xvg
 fatslim apl -c ../20fs.gro -n index.ndx -t ../20fs.xtc --plot-apl apl.xvg --plot-area area.xvg
 gmx msd -f traj-center-mol.xtc -n index.ndx -lateral z -b 0 -e 170 -s ../20fs.tpr -rmcomm -o diffusion.xvg
+mkdir plots
+cd plots
+../../../../files/plot.py  thickness.xvg
+../../../../files/plot.py  area.xvg
+../../../../files/plot.py  apl.xvg
+../../../../files/plot.py  diffusion.xvg
 
 # clean up
 
-cp -r ../analysis ../../../
-rm -r ../../../$fp
+cp -r ../plots ../../../../
+rm -r ../../../../${fp}
