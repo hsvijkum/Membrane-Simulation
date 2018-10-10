@@ -75,7 +75,7 @@ fatslim apl -c ../20fs.gro -n index.ndx -t ../20fs.xtc --plot-apl apl.xvg --plot
 
 mkdir plots
 cd plots
-../../../../files/xvg_plot.py  thickness.xvg -o ${fp}.thickness.pdf
-../../../../files/xvg_plot.py  area.xvg -o ${fp}.area.pdf
-../../../../files/xvg_plot.py  apl.xvg -o -o ${fp}.apl.pdf
+../../../../files/xvg_plot.py  ../thickness.xvg -o ${fp}.thickness.pdf
+../../../../files/xvg_plot.py  ../area.xvg -o ${fp}.area.pdf
+../../../../files/xvg_plot.py  ../apl.xvg -o -o ${fp}.apl.pdf
 
