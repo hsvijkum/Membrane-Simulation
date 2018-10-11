@@ -61,7 +61,7 @@ gmx mdrun -deffnm 20fs -v -nt 4
 
 mkdir analysis
 cd analysis
-(echo a PO4 ROH; echo name 5 headgroups; echo del 0-4; echo q) | gmx make_ndx -f ../20fs.gro -o index.ndx
+(echo del 0-100; echo a PO4 ROH; echo name 0 headgroups; echo q) | gmx make_ndx -f ../20fs.gro -o index.ndx
 gmx trjconv -f ../20fs.xtc -s ../20fs.tpr -o traj-center-mol.xtc -center -n index.ndx -pbc mol
 
 # analysis
