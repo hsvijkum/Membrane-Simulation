@@ -5,7 +5,6 @@
 size=100
 lipidtype=$1
 chol=$2
-time=20
 asym=$3
 
 # energy minimization
