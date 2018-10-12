@@ -54,7 +54,7 @@ cd ..
 mkdir 20fs
 cp 15fs/15fs.gro 15fs/topol.top 20fs
 cd 20fs
-gmx grompp -f ../../files/martini_v2.x_new-rf.prod_run.${lipidtype}.mdp -c 20fs.gro -p topol.top -o 20fs.tpr
+gmx grompp -f ../../files/martini_v2.x_new-rf.prod_run.${lipidtype}.mdp -c 15fs.gro -p topol.top -o 20fs.tpr
 gmx mdrun -deffnm 20fs -v -nt 8
 
 # indexing
