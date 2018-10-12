@@ -2,9 +2,9 @@ import sys,os,math,random,subprocess
 import numpy as np
 import matplotlib
 
-lipids=["DOPC", "DPPC", "DTPC", "DLPC"]
-chol=[20, 30, 40]
-asym=[20, 30]
+lipids=["DOPC", "DPPC", "DOPE", "DPPE", "DOPS", "DPPS"]
+chol=[30]
+asym=[30]
 
 for l in lipids:
 	for c in chol:
