@@ -3,8 +3,8 @@ import numpy as np
 import matplotlib
 
 lipids=["DOPC", "DPPC", "DOPE", "DPPE", "DOPS", "DPPS"]
-chol=[30]
-asym=[30]
+chol=[10, 20, 30, 40]
+asym=[10, 20, 30, 40]
 
 for l in lipids:
 	for c in chol:
