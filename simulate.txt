@@ -7,11 +7,12 @@ lipidtype=$1
 chol=$2
 asym=$3
 
-# energy minimization
-
 fp=${lipidtype}_${size}_${asym}_CHOL_${chol}
 mkdir $fp
 cd $fp
+
+# energy minimization
+
 mkdir em
 cd em
 ../../files/insane.py -l ${lipidtype}:${size} -l CHOL:${chol} -u ${lipidtype}:${size} -u CHOL:${chol} -pbc square -sol W -x 7.5 -y 7.5 -z 10 -o ${fp}.gro -p top.top -asym $asym
