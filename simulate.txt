@@ -3,21 +3,45 @@
 # variables 
 
 size=100
-lipidtype=$1
-chol=$2
-asym=$3
+args=$1
+descr=$2
+n=$3
+asym=$4
 
-fp=${lipidtype}_${size}_${asym}_CHOL_${chol}
-mkdir $fp
-cd $fp
+s1='1.0 '
+s2='320 '
+s3='3e-4 '
+s4='1.0 '
+
+str1=''
+str2=''
+str3=''
+str4=''
+while [ $n -ge 1 ]
+do
+	str1+="$s1"
+	str2+="$s2"
+	str3+="$s3"
+	str4+="$s4"
+	((n--))
+done
 
 # energy minimization
 
+mkdir "$descr $asym"
+cd "$descr $asym"
 mkdir em
 cd em
-../../files/insane.py -l ${lipidtype}:${size} -l CHOL:${chol} -u ${lipidtype}:${size} -u CHOL:${chol} -pbc square -sol W -x 7.5 -y 7.5 -z 10 -o ${fp}.gro -p top.top -asym $asym
-sed -i ’s/martini.itp/martini_v2.0_lipids_all_201506.itp/‘ topol.top
-gmx grompp -f ../../files/minimization${lipidtype}.mdp -c ${fp}.gro -p topol.top -o em.tpr
+../../files/insane.py $args
+cat ../../files/header.txt top.top > topol.top
+sed -i '' '3d' topol.top
+cp ../../files/minimization.mdp ../em/
+sed -i '' "s/REPLACE0/$descr/" minimization.mdp
+sed -i '' "s/REPLACE1/$str1/" minimization.mdp
+sed -i '' "s/REPLACE2/$str2/" minimization.mdp
+sed -i '' "s/REPLACE3/$str3/" minimization.mdp
+sed -i '' "s/REPLACE4/$str4/" minimization.mdp
+gmx grompp -f minimization.mdp -c bilayer.gro -p topol.top -o em.tpr
 gmx mdrun -deffnm em -v
 cd ..
 
@@ -26,8 +50,14 @@ cd ..
 mkdir 1fs
 cp em/em.gro em/topol.top 1fs
 cd 1fs
-gmx grompp -f ../../files/martini_v2.x_new-rf.1fs.${lipidtype}.mdp -c em.gro -p topol.top -o 1fs.tpr
-gmx mdrun -deffnm 1fs -v -nt 8
+cp ../../files/martini_v2.x_new-rf.1fs.mdp ../1fs/
+sed -i '' "s/REPLACE0/$descr/" martini_v2.x_new-rf.1fs.mdp
+sed -i '' "s/REPLACE1/$str1/" martini_v2.x_new-rf.1fs.mdp
+sed -i '' "s/REPLACE2/$str2/" martini_v2.x_new-rf.1fs.mdp
+sed -i '' "s/REPLACE3/$str3/" martini_v2.x_new-rf.1fs.mdp
+sed -i '' "s/REPLACE4/$str4/" martini_v2.x_new-rf.1fs.mdp
+gmx grompp -f martini_v2.x_new-rf.1fs.mdp -c em.gro -p topol.top -o 1fs.tpr
+gmx mdrun -deffnm 1fs -v -nt 4 -dlb yes
 cd ..
 
 # 5fs 
@@ -35,8 +65,14 @@ cd ..
 mkdir 5fs
 cp 1fs/1fs.gro 1fs/topol.top 5fs
 cd 5fs
-gmx grompp -f ../../files/martini_v2.x_new-rf.5fs.${lipidtype}.mdp -c 1fs.gro -p topol.top -o 5fs.tpr
-gmx mdrun -deffnm 5fs -v -nt 8
+cp ../../files/martini_v2.x_new-rf.5fs.mdp ../5fs/
+sed -i '' "s/REPLACE0/$descr/" martini_v2.x_new-rf.5fs.mdp
+sed -i '' "s/REPLACE1/$str1/" martini_v2.x_new-rf.5fs.mdp
+sed -i '' "s/REPLACE2/$str2/" martini_v2.x_new-rf.5fs.mdp
+sed -i '' "s/REPLACE3/$str3/" martini_v2.x_new-rf.5fs.mdp
+sed -i '' "s/REPLACE4/$str4/" martini_v2.x_new-rf.5fs.mdp
+gmx grompp -f martini_v2.x_new-rf.5fs.mdp -c 1fs.gro -p topol.top -o 5fs.tpr
+gmx mdrun -deffnm 5fs -v -nt 4 -dlb yes
 cd ..
 
 # 15fs
@@ -44,8 +80,14 @@ cd ..
 mkdir 15fs
 cp 5fs/5fs.gro 5fs/topol.top 15fs
 cd 15fs
-gmx grompp -f ../../files/martini_v2.x_new-rf.15fs.${lipidtype}.mdp -c 5fs.gro -p topol.top -o 15fs.tpr
-gmx mdrun -deffnm 15fs -v -nt 8
+cp ../../files/martini_v2.x_new-rf.15fs.mdp ../15fs/
+sed -i '' "s/REPLACE0/$descr/" martini_v2.x_new-rf.15fs.mdp
+sed -i '' "s/REPLACE1/$str1/" martini_v2.x_new-rf.15fs.mdp
+sed -i '' "s/REPLACE2/$str2/" martini_v2.x_new-rf.15fs.mdp
+sed -i '' "s/REPLACE3/$str3/" martini_v2.x_new-rf.15fs.mdp
+sed -i '' "s/REPLACE4/$str4/" martini_v2.x_new-rf.15fs.mdp
+gmx grompp -f martini_v2.x_new-rf.15fs.mdp -c 5fs.gro -p topol.top -o 15fs.tpr
+gmx mdrun -deffnm 15fs -v -nt 4 -dlb yes
 cd ..
 
 # 20fs
@@ -53,8 +95,14 @@ cd ..
 mkdir 20fs
 cp 15fs/15fs.gro 15fs/topol.top 20fs
 cd 20fs
-gmx grompp -f ../../files/martini_v2.x_new-rf.prod_run.${lipidtype}.mdp -c 15fs.gro -p topol.top -o 20fs.tpr
-gmx mdrun -deffnm 20fs -v -nt 8
+cp ../../files/martini_v2.x_new-rf.prod_run.mdp ../20fs/
+sed -i '' "s/REPLACE0/$descr/" martini_v2.x_new-rf.prod_run.mdp
+sed -i '' "s/REPLACE1/$str1/" martini_v2.x_new-rf.prod_run.mdp
+sed -i '' "s/REPLACE2/$str2/" martini_v2.x_new-rf.prod_run.mdp
+sed -i '' "s/REPLACE3/$str3/" martini_v2.x_new-rf.prod_run.mdp
+sed -i '' "s/REPLACE4/$str4/" martini_v2.x_new-rf.prod_run.mdp
+gmx grompp -f martini_v2.x_new-rf.prod_run.mdp -c 15fs.gro -p topol.top -o 20fs.tpr
+gmx mdrun -deffnm 20fs -v -nt 4 -dlb yes
 
 # indexing
 
@@ -68,13 +116,19 @@ gmx trjconv -f ../20fs.xtc -s ../20fs.tpr -o traj-center-mol.xtc -center -n inde
 fatslim membranes -c ../20fs.gro -n index.ndx --output-index bilayer_leaflet.ndx
 fatslim thickness -c ../20fs.gro -n index.ndx -t ../20fs.xtc --plot-thickness thickness.xvg
 fatslim apl -c ../20fs.gro -n index.ndx -t ../20fs.xtc --plot-apl apl.xvg --plot-area area.xvg
-#gmx msd -f traj-center-mol.xtc -n index.ndx -lateral z -b 0 -e 170 -s ../20fs.tpr -rmcomm -o diffusion.xvg
 
 # plots
 
 mkdir plots
 cd plots
-../../../../files/xvg_plot.py  ../thickness.xvg -o ${fp}.thickness.pdf
-../../../../files/xvg_plot.py  ../area.xvg -o ${fp}.area.pdf
-../../../../files/xvg_plot.py  ../apl.xvg -o -o ${fp}.apl.pdf
+../../../../files/plot.py ../thickness.xvg -o thickness.pdf
+../../../../files/plot.py ../area.xvg -o area.pdf
+../../../../files/plot.py ../apl.xvg -o apl.pdf
 
+if [ -e ../../20fs.gro ]
+then 
+	echo 1
+else
+	cd ../../../../
+	rm -r "$descr $asym"
+fi
